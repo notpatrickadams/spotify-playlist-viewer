@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+    {% block title%}Home{% endblock %}
+    
+    {% block content %}
+    <h2>Convert Profile URL to Username</h2>
+    <h5>Used for users that made their Spotify account with Facebook</h5>
+    <form action="" method="post">
+        <input type="text" class="form-control" placeholder="Spotify User URL" name="userurl" value="{{ request.form.userurl }}">
+        <br>
+        <input type="submit" class="btn btn-dark" value="Submit">
+    </form>
+
+    {% if username != None %}
+    <br>
+    <h3>
+        Username: {{ username }}
+    </h3>
+    {% endif %}
+
+    {% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+    {% block title%}Playlist Table{% endblock %}
+
+    {% block content %}
+    <a href="/playlist" class="btn btn-dark">Playlist Pie Chart</a>
+    <br>
+    <table>
+        <tr>
+            <th>Artist</th>
+            <th>Number of Tracks</th>
+        </tr>
+        {% for i in playlist %}
+        <tr>
+            <td>{{ i }}</td>
+            <td>{{ playlist[i] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endblock %}

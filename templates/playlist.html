@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+    {% block title%}Playlist{% endblock %}
+
+    {% block content %}
+    <a href="/playlist-table" class="btn btn-dark">Playlist Table</a>
+    <br>
+    <div id="piechart" style="width: 90%"></div>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Artist', 'Tracks'],
+                {% for i in playlist %}
+                    {% if playlist[i] == playlist[-1] %}
+                        ['{{ i }}', {{ playlist[i] }}]
+                    {% endif %}
+                    {% if playlist[i] != playlist[-1] %}
+                        ['{{ i }}', {{ playlist[i] }}],
+                    {% endif %}
+                {% endfor %}
+            ]);
+            var options = {
+                pieHole: 0.4,
+                height: 600,
+                chartArea: {  width: "100%", height: "90%" },
+                legend: { position: "bottom"}
+            };
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+            chart.draw(data, options);
+        };
+    </script>
+    {% endblock %}
