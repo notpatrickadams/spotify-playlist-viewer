@@ -22,7 +22,7 @@ def url_to_uri(url):
 
 def profileurl(url):
     try:
-        if "http" in url and "user/" and "open.spotify.com" in url:
+        if "http" in url and "user/" in url and "open.spotify.com" in url:
             try:
                 user = str(url).split("user/")[1].split("?")[0]
                 return user
@@ -80,4 +80,63 @@ def main(uri):
         a.update({artist : c[artist]})
 
     return a
-     
+    
+def compare(uriA, uriB):
+    tracklistA = []
+    tracklistB = []
+
+    cl = getClient()
+    client_credentials_manager = SpotifyClientCredentials(cl[0], cl[1])
+    sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+    usernameA = uriA.split(':')[2]
+    playlist_idA = uriA.split(':')[3]
+    usernameB = uriB.split(':')[2]
+    playlist_idB = uriB.split(':')[3]
+
+    if playlist_idA == "None" or playlist_idA == None or playlist_idB == "None" or playlist_idB == None:
+        return None
+    try:
+        resA = sp.user_playlist_tracks(user=usernameA, playlist_id=playlist_idA)
+        resB = sp.user_playlist_tracks(user=usernameB, playlist_id=playlist_idB)
+    except spotipy.client.SpotifyException:
+        return None
+    except requests.exceptions.ConnectionError:
+        return "Connection Error"
+
+    trackIndexA, trackIndexB = 0, 0
+    totalTracksA, totalTracksB = resA["total"], resB["total"]
+
+    while trackIndexA < int(totalTracksA):
+        r = sp.user_playlist_tracks(usernameA, playlist_id=playlist_idA, offset=trackIndexA)
+        for track in r['items']:
+            #Make dict with album name, track name, and artist name
+            #track["track"]["name"]
+            #track["track"]["album"]["name"]
+            #track["track"]["album"]["artists"][0]["name"]
+            tracklistA.append(
+                {
+                    "artist" : track["track"]["album"]["artists"][0]["name"],
+                    "track" : track["track"]["name"],
+                    "album" : track["track"]["album"]["name"],
+                    "imgurl" : track["track"]["album"]["images"][0]["url"]
+                }
+            )
+        trackIndexA += 100
+    while trackIndexB < int(totalTracksB):
+        r = sp.user_playlist_tracks(usernameB, playlist_id=playlist_idB, offset=trackIndexB)
+        for track in r['items']:
+            #Make dict with album name, track name, and artist name
+            #track["track"]["name"]
+            #track["track"]["album"]["name"]
+            #track["track"]["album"]["artists"][0]["name"]
+            tracklistB.append(
+                {
+                    "artist" : track["track"]["album"]["artists"][0]["name"],
+                    "track" : track["track"]["name"],
+                    "album" : track["track"]["album"]["name"],
+                    "imgurl" : track["track"]["album"]["images"][0]["url"]
+                }
+            )
+        trackIndexB += 100
+
+    return [val for val in tracklistA if val in tracklistB]

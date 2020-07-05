@@ -4,7 +4,7 @@ import main
 app = Flask(__name__)
 app.static_folder="static"
 
-app.secret_key = "some secret key"
+app.secret_key = "some secret"
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -52,5 +52,29 @@ def profileconvert():
         username = main.profileurl(userurl)
     return render_template("profile.html", username=username, current_url="/profile-url-conversion")
 
+@app.route("/comparison", methods=["GET", "POST"])
+def comparisonhome():    
+    if request.method == "POST":
+        session["uriA"] = main.url_to_uri(request.form["uriA"])
+        session["uriB"] = main.url_to_uri(request.form["uriB"])
+        session["userA"] = request.form["userA"]
+        session["userB"] = request.form["userB"]
+
+        uriA = session.get("uriA", None)
+        uriB = session.get("uriB", None)
+        userA = session.get("userA", None)
+        userB = session.get("userB", None)
+
+        furiA = f"spotify:playlist:{userA}:{uriA}"
+        furiB = f"spotify:playlist:{userB}:{uriB}"
+
+        intersection = main.compare(furiA, furiB)
+        if intersection == None:
+            return render_template("no-playlist.html")
+
+        return render_template("compare.html", current_url="/comparison", intersection=intersection)
+        
+    return render_template("comparehome.html", current_url="/comparison")
+
 if __name__ == "__main__":
-    app.run(debug=True, port=80)
+    app.run()

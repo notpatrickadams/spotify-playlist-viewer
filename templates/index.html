@@ -3,7 +3,7 @@
     
     {% block content %}
     <form action="" method="post">
-        <input type="text" class="form-control" placeholder="Spotify Username" name="username" value="{{ request.form.username }}">
+        <input type="text" class="form-control" placeholder="Spotify Username (doesn't have to be a real user)" name="username" value="{{ request.form.username }}">
         <br>
         <input type="text" class="form-control" placeholder="Spotify Playlist URL" name="uri" value="{{ request.form.uri }}">
         <br>

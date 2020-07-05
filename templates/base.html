@@ -12,13 +12,13 @@
         <link rel="stylesheet" href="/static/index.css">
 
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>{% block title %}{% endblock %} - Spotify Playlist Viewer</title>
+        <title>{% block title %}{% endblock %} - Playlist Retriever</title>
     </head>
     <body>
         <div class="jumbotron jumbotron-fluid text-center bg-dark" style="margin: 0%">
             <h1>
-                <a href="/" style="font-weight: bold; color: white">SpotGrab</a>
-                <i class="fa fa-spotify" aria-hidden="true" style="color: white"></i>
+                <a href="/" style="font-weight: bold; color: white">Playlist Retriever</a>
+                <i style="color: white;" class="fas fa-dog"></i>
             </h1>
         </div>
         <nav class="navbar navbar-expand navbar-dark bg-dark">
@@ -31,6 +31,9 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {% if current_url=='/profile-url-conversion' %}active{% endif %}" href="/profile-url-conversion">Username Getter</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if current_url=='/comparison' %}active{% endif %}" href="/comparison">Compare</a>
                 </li>
             </ul>
         </nav>
