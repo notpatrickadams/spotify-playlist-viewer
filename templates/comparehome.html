@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Compare Playlists{% endblock %}
+
+{% block content %}
+<form action="" method="post">
+    <div class="row">
+        <div class="col-sm">
+            <input type="text" class="form-control" placeholder="Spotify User 1 (doesn't have to be a real user)" name="userA" value="{{ request.form.userA }}">
+        </div>
+        <div class="col-sm">
+            <input type="text" class="form-control" placeholder="Spotify User 2 (doesn't have to be a real user)" name="userB" value="{{ request.form.userB }}">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm">
+            <input type="text" class="form-control" placeholder="Spotify Playlist 1" name="uriA" value="{{ request.form.uriA }}">
+        </div>
+        <div class="col-sm">
+            <input type="text" class="form-control" placeholder="Spotify Playlist 2" name="uriB" value="{{ request.form.uriB }}">
+        </div>
+    </div>
+    <br>
+    <input type="submit" class="btn btn-dark" value="Submit">
+</form>
+{% endblock %}

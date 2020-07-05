@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Compare Playlists{% endblock %}
+
+{% block content %}
+<script src="/static/index.js"></script>
+<div class="row">
+    {% for item in intersection %}
+    <div style="width: 20vw;" class="img-container">
+        <img style="width: 100%;" src="{{ item['imgurl'] }}" alt="" srcset="">
+        <div class="trackinfooverlay">
+            <div class="trackinfo">
+                <p>{{ item['artist'] }}</p>
+                <p><strong>{{ item['track'] }}</strong></p>
+                <p>{{ item['album'] }}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
